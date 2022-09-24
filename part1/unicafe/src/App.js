@@ -15,14 +15,25 @@ const Statistics = ({good, neutral, bad, all}) => {
       <>
         <br/>
         {/* <h1>Statistics</h1> */}
-        <p>good  <strong> {good} </strong> </p>
+        {/* <p>good  <strong> {good} </strong> </p>
         <p>neutral <strong> {neutral} </strong> </p>
         <p>bad <strong> {bad} </strong> </p>
         <p>all <strong> {all} </strong> </p>
-        <p>average <strong> {moyen} </strong> </p>
+        <p>average <strong> {moyen} </strong> </p> */}
+         <StatisticLine text="good" value ={good} />
+         <StatisticLine text="neutral" value ={neutral} />
+         <StatisticLine text="bad" value ={bad} />
       </>
       )
     }
+}
+
+const StatisticLine = ({text, value}) => {
+  return(
+    <>
+      <p> {text} <strong> {value} </strong> </p>
+    </>
+  )
 }
 
 const ButtonVote = ( {handleClick, text} ) => {
