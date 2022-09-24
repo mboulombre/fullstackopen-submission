@@ -2,19 +2,27 @@ import { useState } from 'react';
 
 const Statistics = ({good, neutral, bad, all}) => {
     
-  const moyen = all / 2;
+    if(good === 0 && neutral === 0 && bad === 0){
+        return(
+          <>
+              <h3>No feedback given</h3>
+          </>
+        )
+    }else{
+      const moyen = all / 2;
 
-  return(
-  <>
-    <br/>
-    {/* <h1>Statistics</h1> */}
-    <p>good  <strong> {good} </strong> </p>
-    <p>neutral <strong> {neutral} </strong> </p>
-    <p>bad <strong> {bad} </strong> </p>
-    <p>all <strong> {all} </strong> </p>
-    <p>average <strong> {moyen} </strong> </p>
-  </>
-  )
+      return(
+      <>
+        <br/>
+        {/* <h1>Statistics</h1> */}
+        <p>good  <strong> {good} </strong> </p>
+        <p>neutral <strong> {neutral} </strong> </p>
+        <p>bad <strong> {bad} </strong> </p>
+        <p>all <strong> {all} </strong> </p>
+        <p>average <strong> {moyen} </strong> </p>
+      </>
+      )
+    }
 }
 
 const ButtonVote = ( {handleClick, text} ) => {
