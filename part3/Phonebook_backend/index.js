@@ -2,6 +2,11 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
+require('dotenv').config();
+
+const Contact = require('./models/contact');
+
+
 
 const PORT = process.env.PORT || 3001;
 app.use(express.json());
@@ -79,11 +84,11 @@ app.delete('/api/persons/:id', (req, res) => {
 app.post('/api/persons', (req, res) => {
         const element = req.body;
 
-        const newElement = { 
-            "id": Math.floor(Math.random() * 100),
+        const newElement = new Contact({ 
+            // "id": Math.floor(Math.random() * 100),
             "name": element.name, 
             "number": element.number
-          }
+          });
 
           let newTabs = data;
 
@@ -96,10 +101,11 @@ app.post('/api/persons', (req, res) => {
                             "error": "the name must be unique"
                         })
                     }else{
-                         newTabs = [...newTabs, newElement];
-                        res.status(200).json({
-                            "message": "element was added successful",
-                            "data": newTabs
+                        newElement.save().then(savedNote => {
+                            res.status(200).json({
+                                "message": "element was added successful",
+                                "data": savedNote
+                            })
                         })
                     }
                
