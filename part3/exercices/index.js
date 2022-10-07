@@ -51,6 +51,23 @@ app.get('/info', (req, res) => {
     res.status(200).send(`<h1>Phonebook has info for 2 people</h1><br/> <br/>  ${today}`);
 });
 
+app.delete('/api/persons/:id', (req, res) => {
+        const id = Number(req.params.id);
+        const tabLength = data.length;
+
+        const newTabs = data.filter(item => item.id !== id);
+            if(id <= tabLength){
+                res.status(200).json({
+                    "message": "Element was delete",
+                    data: newTabs
+                })
+            }else{
+                res.status(404).json({
+                    "error": 'element was not found'
+                })
+            }
+});
+
 
  app.listen(3001, () => {
     console.log("the server starting on port"+ 3001);
