@@ -32,6 +32,10 @@ app.get('/api/persons', (req, res) => {
         })
 });
 
+app.get('/info', (req, res) => {
+    const today = new Date();
+    res.status(200).send(`<h1>Phonebook has info for 2 people</h1><br/> <br/>  ${today}`);
+});
 
 
  app.listen(3001, () => {
