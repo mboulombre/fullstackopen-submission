@@ -1,7 +1,11 @@
 const express = require('express');
 const app = express();
+const morgan = require('morgan')
 
 app.use(express.json());
+// app.use(morgan('tiny'));
+app.use(morgan(':method :url :status  - :response-time ms - :res[content-length]' ));
+
 
 const data = [
     { 
@@ -83,7 +87,7 @@ app.post('/api/persons', (req, res) => {
 
         if (element.name && element.number) {
           const tab =  newTabs.filter( item => item.name === element.name);
-            console.log('tab: ', tab);
+            // console.log('tab: ', tab);
                     if(tab.length > 0){
                         res.status(401).json({
                             "error": "the name must be unique"
