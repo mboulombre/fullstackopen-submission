@@ -4,7 +4,11 @@ import Header from '../Header';
 
 const  Course = ({course}) => {
 
-    console.log("course: ", course.parts);
+    let valeurInitiale = 0;
+    const total = course && course.parts.reduce((accum, courantValue) => accum + courantValue.exercises, valeurInitiale);
+
+        // console.log("total: ", total);
+
   return (
     <div>
             <Header  title={course.name} />
@@ -15,7 +19,9 @@ const  Course = ({course}) => {
                     )
                 })
             }
-            
+            <p>
+                <strong> { ` total of ${total ? total  : 0} exercises`} </strong>
+            </p>
     </div>
   )
 }
