@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan')
 
+const PORT = process.env.PORT || 3001;
 app.use(express.json());
 // app.use(morgan('tiny'));
 app.use(morgan(':method :url :status  - :response-time ms - :res[content-length]' ));
@@ -110,6 +111,6 @@ app.post('/api/persons', (req, res) => {
 });
 
 
- app.listen(3001, () => {
+ app.listen(PORT, () => {
     console.log("the server starting on port"+ 3001);
  });
