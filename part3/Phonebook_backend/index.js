@@ -1,4 +1,5 @@
 const express = require('express');
+// eslint-disable-next-line semi
 const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
@@ -39,23 +40,46 @@ const data = [
 ];
 
 app.get('/api/persons', (req, res) => {
-        res.status(200).json({
-            data: data
+    Contact.find()
+        .then((data) => {
+            res.status(200).json({
+                data: data
+            })
         })
+       .catch((error) => {
+            res.status(404).json({
+                "message": "error"
+            })
+       })
 });
 
 app.get('/api/persons/:id', (req, res) => {
-            const id = Number(req.params.id);
-        const newData = data.find(item => item.id === id );
-        if (newData) {
+            const id = req.params.id;
+    Contact.findById(id)
+        .then((data) => {
+            if(data) {
                 res.status(200).json({
-                    "data": newData
+                    "data": data
                 })
-        } else {
+            }else{
+                res.status(404).json({
+                    "error": 'element not found'
+                })
+            }
+        })
+        .catch(() => {
             res.status(404).json({
-                "error": 'element not found'
+                "error": ' error'
             })
-        }
+        })
+        // const newData = data.find(item => item.id === id );
+        // if (newData) {
+              
+        // } else {
+        //     res.status(404).json({
+        //         "error": 'element not found'
+        //     })
+        // }
 });
 
 app.get('/info', (req, res) => {
@@ -64,20 +88,38 @@ app.get('/info', (req, res) => {
 });
 
 app.delete('/api/persons/:id', (req, res) => {
-        const id = Number(req.params.id);
+        const id = req.params.id;
         const tabLength = data.length;
 
-        const newTabs = data.filter(item => item.id !== id);
-            if(id <= tabLength){
-                res.status(200).json({
-                    "message": "Element was delete",
-                    data: newTabs
-                })
-            }else{
+    Contact.findByIdAndDelete(id)
+            .then((note) => {
+                if(note){
+                    res.status(200).json({
+                        "message": "L'element à été supprimé"
+                    })
+                }else{
+                    res.status(404).json({
+                        "error": 'element was not found'
+                    })
+                }
+            })
+            .catch((error) => {
                 res.status(404).json({
-                    "error": 'element was not found'
+                    "error": "Error du format du contenu"
                 })
-            }
+            })
+
+        // const newTabs = data.filter(item => item.id !== id);
+        //     if(id <= tabLength){
+        //         res.status(200).json({
+        //             "message": "Element was delete",
+        //             data: newTabs
+        //         })
+        //     }else{
+        //         res.status(404).json({
+        //             "error": 'element was not found'
+        //         })
+        //     }
 });
 
 
